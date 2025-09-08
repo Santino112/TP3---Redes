@@ -4,15 +4,15 @@ import fetch from "node-fetch";
 const API_KEY = "e65b12a6ef784ac48bb213120250109";
 const CITY = "Berlin";
 const cities = ["Shanghai", "Berlin", "Rio de Janeiro"]
-const randomCity = cities[Math.floor(Math.random() * cities.length)];
 
 async function getWeather() {
   try {
+    const city = cities[Math.floor(Math.random() * cities.length)];
     const response = await fetch(
-      `http://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${randomCity}&aqi=no&units=metric`
+      `http://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${city}&aqi=no&units=metric`
     );
     const data = await response.json();
-    console.log("Clima en", randomCity);
+    console.log("Clima en", city);
     console.log("Temperatura:", data.current.temp_c, "°C");
     console.log("Condición:", data.current.condition.text);
     console.log("Humedad:", data.current.humidity, "%");
