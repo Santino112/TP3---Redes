@@ -1,11 +1,18 @@
 // src/pages/Dashboard.jsx
 import ChartComponent from "../Components/ChartComponent.jsx";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 const Dashboard = () => {
     const [dataBeijing, setDataBeijing] = useState([]);
     const [dataMadrid, setDataMadrid] = useState([]);
     const [dataRio, setDataRio] = useState([]);
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+      navigate('/Login');
+      localStorage.removeItem('datosLogin');
+    };
 
     useEffect(() => {
         // Función para obtener datos de temperatura desde la API
@@ -40,6 +47,7 @@ const Dashboard = () => {
             (Datos solicitados cada media hora)
             </span>
         </p>
+        <button onClick={handleLogout}>Logout</button>
       </div>
 
       {/* Panel derecho scrolleable (70%) */}
