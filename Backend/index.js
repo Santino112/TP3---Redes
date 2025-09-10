@@ -1,25 +1,26 @@
-import fetch from "node-fetch";
+import express from 'express';
+import axios from 'axios';
+import dotenv from 'dotenv';
+import cors from 'cors';
+import { getConnection } from './src/database.js';
+import authRoutes from './src/auth/autControllerRoute.js'
+dotenv.config();
 
-// 🔑 Reemplaza con tu API key de WeatherAPI
-const API_KEY = "e65b12a6ef784ac48bb213120250109";
-const CITY = "Berlin";
-const cities = ["Shanghai", "Berlin", "Rio de Janeiro"]
+const app = express();
+const PORT = process.env.PORT;
 
-async function getWeather() {
-  try {
-    const city = cities[Math.floor(Math.random() * cities.length)];
-    const response = await fetch(
-      `http://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${city}&aqi=no&units=metric`
-    );
-    const data = await response.json();
-    console.log("Clima en", city);
-    console.log("Temperatura:", data.current.temp_c, "°C");
-    console.log("Condición:", data.current.condition.text);
-    console.log("Humedad:", data.current.humidity, "%");
-  } catch (error) {
-    console.error("Error al obtener el clima:", error);
-  }
-}
+app.use(express.json());
+app.use(cors());
+app.use('/auth', authRoutes);
 
-setInterval(getWeather, 5000);
-getWeather();
+try {
+  const connection = getConnection();
+  console.log('Conectado a la base de datos correctamente');
+
+  app.listen(PORT, () => {
+    console.log(`Servidor corriendo en el puerto ${PORT}`);
+  });
+} catch (error) {
+    console.log('Error al conectar con la base de datos', error);
+    process.exit(1);
+};
