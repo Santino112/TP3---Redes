@@ -1,8 +1,9 @@
 import fetch from "node-fetch";
+import websocket from "ws";
+import dotenv from "dotenv";
+dotenv.config();
 
-// 🔑 Reemplaza con tu API key de WeatherAPI
-const API_KEY = "e65b12a6ef784ac48bb213120250109";
-const CITY = "Berlin";
+const API_KEY = process.env.API_KEY;
 const cities = ["Shanghai", "Berlin", "Rio de Janeiro"]
 
 async function getWeather() {
