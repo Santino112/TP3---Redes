@@ -26,5 +26,5 @@ ws.on("open", () => {
 
     ws.send(JSON.stringify(weather));
     console.log("📤 Cliente WS envió:", weather);
-  }, 30000);
+  }, 1800000);
 });

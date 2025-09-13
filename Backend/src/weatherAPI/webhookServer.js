@@ -10,13 +10,13 @@ const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY
 app.post("/webhook", async (req, res) => {
   const weather = {
     ...req.body,
-    timestamp_utc: new Date().toISOString(), // Timestamp UTC
+    timestamp_utc: new Date().toISOString(),
   };
 
   console.log("📥 Webhook recibió:", weather);
 
   try {
-    const { error } = await supabase.from("weather_data").insert([weather]);
+    const { error } = await supabase.from("weather_data_week").insert([weather]);
 
     if (error) throw error;
 
