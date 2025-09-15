@@ -27,7 +27,7 @@ export const register = async (req, res) => {
 };
 
 export const login = async (req, res) => {
-    const { username, password} = req.body;
+    const { username, password } = req.body;
     try {
         const connection = getConnection();
         const existente = await connection.query(
@@ -35,14 +35,14 @@ export const login = async (req, res) => {
             [username]
         );
         if (existente.rows.length === 0) {
-            return res.status(401).json({message: 'Usuario y/o contraseñas incorrectas'})
+            return res.status(401).json({ message: 'Usuario y/o contraseñas incorrectas' })
         }
         const user = existente.rows[0];
         const passwordMatch = await bcrypt.compare(password, user.password_hash);
         if (!passwordMatch) {
-            return res.status(401).json({message: 'Usuario y/o contraseñas incorrectas'})
+            return res.status(401).json({ message: 'Usuario y/o contraseñas incorrectas' })
         };
-        const token = jwt.sign (
+        const token = jwt.sign(
             {
                 id: user.id,
                 username: user.username
@@ -52,12 +52,45 @@ export const login = async (req, res) => {
                 expiresIn: process.env.JWT_EXPIRES_IN || '1h'
             }
         );
+
+        const refreshToken = jwt.sign(
+            {
+                id: user.id
+            },
+            process.env.JWT_REFRESH_SECRET,
+            {
+                expiresIn: "7d"
+            }
+        )
         res.json({
             message: 'Logueo de usuario exitoso',
             token: token,
+            refreshToken: refreshToken
         });
     } catch (error) {
         console.error('Error al loguear al usuario', error);
-        return res.status(500).json({message: 'Error al loguear al usuario'})
+        return res.status(500).json({ message: 'Error al loguear al usuario' })
     };
+};
+
+export const refreshToken = async (req, res) => {
+    const { token } = req.body; // refresh token enviado por el cliente
+    if (!token) return res.status(401).json({ message: 'No se envió token' });
+
+    try {
+        // Verificar y decodificar refresh token
+        const payload = jwt.verify(token, process.env.REFRESH_SECRET);
+
+        // Crear un nuevo access token
+        const accessToken = jwt.sign(
+            { id: payload.id },
+            process.env.JWT_SECRET,
+            { expiresIn: '15m' }
+        );
+
+        res.json({ accessToken });
+    } catch (error) {
+        console.error('Error al renovar token', error);
+        res.status(403).json({ message: 'Refresh token inválido o expirado' });
+    }
 };
