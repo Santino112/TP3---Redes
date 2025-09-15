@@ -8,6 +8,15 @@ const Dashboard = () => {
   const [dataMadrid, setDataMadrid] = useState({ labels: [], temps: [] });
   const [dataRio, setDataRio] = useState({ labels: [], temps: [] });
   const navigate = useNavigate();
+    const [dataBeijing, setDataBeijing] = useState([]);
+    const [dataMadrid, setDataMadrid] = useState([]);
+    const [dataRio, setDataRio] = useState([]);
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+      navigate('/Login');
+      localStorage.removeItem('datosLogin');
+    };
 
   const handleLogout = () => {
     navigate('/Login');
