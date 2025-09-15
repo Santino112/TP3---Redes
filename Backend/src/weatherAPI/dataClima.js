@@ -13,7 +13,7 @@ app.get("/obtenerClima/:city", async (req, res) => {
 
   try {
     const { data, error } = await supabase
-      .from("weather_data")
+      .from("weather_data_week")
       .select("*")
       .ilike("city", city)
       .order("timestamp_utc", { ascending: false });
