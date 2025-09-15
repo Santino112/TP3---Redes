@@ -74,20 +74,16 @@ export const login = async (req, res) => {
 };
 
 export const refreshToken = async (req, res) => {
-    const { token } = req.body; // refresh token enviado por el cliente
+    const { token } = req.body;
     if (!token) return res.status(401).json({ message: 'No se envió token' });
 
     try {
-        // Verificar y decodificar refresh token
         const payload = jwt.verify(token, process.env.REFRESH_SECRET);
-
-        // Crear un nuevo access token
         const accessToken = jwt.sign(
             { id: payload.id },
             process.env.JWT_SECRET,
             { expiresIn: '15m' }
         );
-
         res.json({ accessToken });
     } catch (error) {
         console.error('Error al renovar token', error);
