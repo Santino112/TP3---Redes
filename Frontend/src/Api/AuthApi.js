@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 // URL base del backend
-const API_URL = 'http://localhost:4000'; // <- reemplaza con el puerto donde corre tu backend
+const API_URL = 'http://localhost:3000'; // <- reemplaza con el puerto donde corre tu backend
 
 // Función para loguear al usuario
 export const loginUser = async (username, password) => {

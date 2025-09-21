@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/api'; //cheqear esto y desp mandarlo a un .env
+const API_URL = 'http://localhost:3000/api'; //cheqear esto y desp mandarlo a un .env
 
 export const getClimaPorCiudad = async (city) => {
   try {

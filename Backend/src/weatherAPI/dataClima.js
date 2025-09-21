@@ -6,7 +6,7 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
-const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
+const supabase = createClient(process.env.DATABASE_URL, process.env.SUPABASE_KEY);
 
 app.get("/obtenerClima/:city", async (req, res) => {
   const { city } = req.params;
@@ -27,6 +27,6 @@ app.get("/obtenerClima/:city", async (req, res) => {
   }
 });
 
-app.listen(5000, () =>
+app.listen(3000, () =>
   console.log("📩 Servidor de datos de clima escuchando en http://localhost:5000")
 );
