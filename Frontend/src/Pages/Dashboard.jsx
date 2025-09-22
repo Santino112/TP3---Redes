@@ -40,27 +40,32 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="flex h-screen bg-neutral-900 text-neutral-100">
-      {/* Panel izquierdo */}
-      <div className="w-[30%] bg-neutral-800 p-6 flex flex-col items-center justify-center">
-        <h1 className="text-3xl md:text-4xl font-bold mb-4 text-center">
+    <div className="flex flex-col min-h-screen bg-neutral-900 text-neutral-100">
+      <div className="w-full bg-neutral-800 p-2 flex flex-col sm:flex-row items-center justify-between">
+        {/* Título */}
+        <h1 className="order-1 sm:order-none text-lg sm:text-lg md:text-2xl lg:text-2xl font-bold text-center mb-3 sm:mb-0">
           📊 Panel Principal
         </h1>
-        <p className="text-neutral-400 text-center max-w-xs">
+
+        {/* Texto explicativo */}
+        <p className="order-3 sm:order-none text-neutral-200 text-center max-w-xs mb-2 sm:mb-0">
           Resumen de estadísticas de temperatura.
-          <span className="block mt-2 text-sm text-neutral-500">
+          <span className="block mt-2 text-sm text-neutral-200">
             (Datos solicitados cada media hora)
           </span>
         </p>
-        <button onClick={handleLogout}>Logout</button>
+        <button
+          onClick={handleLogout}
+          className="order-2 sm:order-none w-full sm:w-auto px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+        >
+          Logout
+        </button>
       </div>
-
-      {/* Panel derecho */}
-      <div className="w-[70%] p-6 overflow-y-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="w-[100%] p-6 overflow-y-auto m-auto">
+        <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 gap-8">
           <ChartComponent
             title="Rio de Janeiro"
-            subtitle="Temperaturas últimas 24h"
+            subtitle="Temperaturas de últimas 24h"
             labels={dataRio.labels}
             data={dataRio.temps}
             color="rgb(59, 130, 246)"
@@ -68,7 +73,7 @@ const Dashboard = () => {
 
           <ChartComponent
             title="Madrid"
-            subtitle="Temperaturas últimas 24h"
+            subtitle="Temperaturas de últimas 24h"
             labels={dataMadrid.labels}
             data={dataMadrid.temps}
             color="rgb(239, 68, 68)"
@@ -76,7 +81,7 @@ const Dashboard = () => {
 
           <ChartComponent
             title="Beijing"
-            subtitle="Temperaturas últimas 24h"
+            subtitle="Temperaturas de últimas 24h"
             labels={dataBeijing.labels}
             data={dataBeijing.temps}
             color="rgb(34, 197, 94)"
