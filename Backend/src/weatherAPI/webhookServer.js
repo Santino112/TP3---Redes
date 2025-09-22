@@ -2,14 +2,25 @@ import express from "express";
 import { createClient } from "@supabase/supabase-js";
 import dotenv from "dotenv";
 dotenv.config();
+
 const app = express();
 app.use(express.json());
 
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
 
 app.post("/webhook", async (req, res) => {
+  const { city, temp, condition, humidity } = req.body;
+
+  // Validación simple
+  if (!city || temp == null || !humidity || !condition) {
+    return res.status(400).json({ error: "Datos incompletos" });
+  }
+
   const weather = {
-    ...req.body,
+    city,
+    temp,
+    condition,
+    humidity,
     timestamp_utc: new Date().toISOString(),
   };
 
@@ -17,7 +28,6 @@ app.post("/webhook", async (req, res) => {
 
   try {
     const { error } = await supabase.from("weather_data_week").insert([weather]);
-
     if (error) throw error;
 
     res.json({ status: "ok" });
