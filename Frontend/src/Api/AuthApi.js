@@ -2,9 +2,8 @@
 import axios from 'axios';
 
 // URL base del backend
-const API_URL = 'http://localhost:3000'; // <- reemplaza con el puerto donde corre tu backend
+const API_URL = 'http://localhost:3000';
 
-// Función para loguear al usuario
 export const loginUser = async (username, password) => {
   try {
     const response = await axios.post(`${API_URL}/auth/login`, {
@@ -18,7 +17,6 @@ export const loginUser = async (username, password) => {
   }
 };
 
-// Si luego quieres agregar register
 export const registerUser = async (username, password) => {
   try {
     const response = await axios.post(`${API_URL}/auth/register`, {

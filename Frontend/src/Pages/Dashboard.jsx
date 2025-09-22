@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import { getClimaPorCiudad } from "../Api/TemperaturaApi.js";
 
 const Dashboard = () => {
-  const [dataBeijing, setDataBeijing] = useState({ labels: [], temps: [] });
-  const [dataMadrid, setDataMadrid] = useState({ labels: [], temps: [] });
+  const [dataShanghai, setDataShanghai] = useState({ labels: [], temps: [] });
+  const [dataBerlin, setDataBerlin] = useState({ labels: [], temps: [] });
   const [dataRio, setDataRio] = useState({ labels: [], temps: [] });
   const navigate = useNavigate();
 
@@ -34,24 +34,23 @@ const Dashboard = () => {
       }
     };
 
-    fetchTemperatureData("Beijing", setDataBeijing);
-    fetchTemperatureData("Madrid", setDataMadrid);
-    fetchTemperatureData("Rio", setDataRio);
+    fetchTemperatureData("Shanghai", setDataShanghai);
+    fetchTemperatureData("Berlin", setDataBerlin);
+    fetchTemperatureData("Rio de Janeiro", setDataRio);
   }, []);
 
   return (
     <div className="flex flex-col min-h-screen bg-neutral-900 text-neutral-100">
-      <div className="w-full bg-neutral-800 p-2 flex flex-col sm:flex-row items-center justify-between">
+      <div className="sticky top-0 z-50 w-full bg-neutral-800 p-3 flex flex-col sm:flex-row items-center justify-between shadow-md">
         {/* Título */}
-        <h1 className="order-1 sm:order-none text-lg sm:text-lg md:text-2xl lg:text-2xl font-bold text-center mb-3 sm:mb-0">
+        <h1 className="text-base sm:text-xl md:text-2xl font-bold text-center mb-3 sm:mb-0">
           📊 Panel Principal
         </h1>
-
         {/* Texto explicativo */}
         <p className="order-3 sm:order-none text-neutral-200 text-center max-w-xs mb-2 sm:mb-0">
           Resumen de estadísticas de temperatura.
           <span className="block mt-2 text-sm text-neutral-200">
-            (Datos solicitados cada media hora)
+            (Datos solicitados cada 10 minutos)
           </span>
         </p>
         <button
@@ -72,18 +71,18 @@ const Dashboard = () => {
           />
 
           <ChartComponent
-            title="Madrid"
+            title="Berlin"
             subtitle="Temperaturas de últimas 24h"
-            labels={dataMadrid.labels}
-            data={dataMadrid.temps}
+            labels={dataBerlin.labels}
+            data={dataBerlin.temps}
             color="rgb(239, 68, 68)"
           />
 
           <ChartComponent
-            title="Beijing"
+            title="Shanghai"
             subtitle="Temperaturas de últimas 24h"
-            labels={dataBeijing.labels}
-            data={dataBeijing.temps}
+            labels={dataShanghai.labels}
+            data={dataShanghai.temps}
             color="rgb(34, 197, 94)"
           />
         </div>

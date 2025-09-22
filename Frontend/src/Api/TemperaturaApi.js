@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3000/api'; //cheqear esto y desp mandarlo a un .env
+const API_URL = 'http://localhost:3000/api';
 
 export const getClimaPorCiudad = async (city) => {
   try {
-    const response = await axios.get(`${API_URL}/obtenerClima`, {
+    const response = await axios.get(`${API_URL}/weather/history`, {
       params: { city }
     });
     return response.data;

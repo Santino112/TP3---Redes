@@ -1,10 +1,9 @@
-// routes/weather.routes.js
-import { Router } from 'express'
-import { getCurrentWeather } from '../weatherAPI/weatherController.js'
+import { Router } from 'express';
+import { getWeatherHistory } from '../weatherAPI/weatherController.js';
 
-const router = Router()
+const router = Router();
 
-// GET /api/weather?city=Berlin
-router.get('/weather', getCurrentWeather)
+// GET histórico
+router.get('/weather/history', getWeatherHistory);
 
-export default router
+export default router;
