@@ -20,6 +20,9 @@ export const register = async (req, res) => {
         await connection.query('INSERT INTO Usuarios (username, password_hash) VALUES ($1, $2)',
             [username, hashedPassword]
         );
+        res.json({
+            message: 'Registro de ususario exitoso'
+        });
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: 'Error al registrar al usuario' });
@@ -75,7 +78,7 @@ export const login = async (req, res) => {
 
 export const refreshToken = async (req, res) => {
     const { token } = req.body;
-    if (!token) return res.status(401).json({ message: 'No se envió token' });
+    if (!token) return res.status(401).json({ message: 'No se envió el token' });
 
     try {
         const payload = jwt.verify(token, process.env.REFRESH_SECRET);
