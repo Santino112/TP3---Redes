@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Typography, Button, Box, TextField, Stack, AppBar, Toolbar, Divider, Snackbar, Alert, AlertTitle, Modal, Fade, Backdrop, Select, FormControl, MenuItem, InputAdornment, IconButton } from "@mui/material";
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import CloudIcon from '@mui/icons-material/Cloud';
+import LoginIcon from '@mui/icons-material/Login';
 import axios from 'axios';
 
 function Login() {
@@ -12,6 +13,7 @@ function Login() {
     const [mensaje, setMensaje] = useState('');
     const [titulo, setTitulo] = useState('');
     const [codigo, setCodigo] = useState('');
+    const [loading, setLoading] = useState(false);
     const [showCodigo, setShowCodigo] = useState(false);
     const navigate = useNavigate();
 
@@ -19,8 +21,13 @@ function Login() {
         setShowCodigo((prev) => !prev);
     };
 
+    const handleRegister = () => {
+        navigate("/Register");
+    };
+
     const handleLogin = async (e) => {
         e.preventDefault();
+        setLoading(true);
 
         const data = {
             username: username,
@@ -53,6 +60,8 @@ function Login() {
             setSeverity("error");
             setUsername('');
             setPassword('');
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -185,6 +194,7 @@ function Login() {
                                 sx={{
                                     width: "100%",
                                     mt: 1,
+                                    mb: 1,
                                     boxShadow: 2,
                                     backgroundColor: "#2485e9",
                                     "&:hover": {
@@ -195,7 +205,29 @@ function Login() {
                                         backgroundColor: "#1f73ca",
                                         color: "white",
                                     },
-                                }}>Ingresar</Button>
+                                }}>{loading ? 'Cargando...' : (
+                                    <>
+                                        <LoginIcon sx={{color: 'white', mr: 1}}  />
+                                        Ingresar
+                                    </>
+                                )}  </Button>
+                            <Button
+                                variant="text"
+                                onClick={handleRegister}
+                                sx={{
+                                    width: "100%",
+                                    mt: 1,
+                                    
+                                    color: 'white',
+                                    "&:hover": {
+                                        backgroundColor: "#1f73ca",
+                                        color: "white",
+                                    },
+                                    "&.Mui-disabled": {
+                                        backgroundColor: "#1f73ca",
+                                        color: "white",
+                                    },
+                                }}>Registrarse</Button>
                         </Box>
                     </Box>
                 </Box>

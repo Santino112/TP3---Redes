@@ -14,7 +14,7 @@ const PORT = process.env.PORT;
 app.use(express.json());
 app.use(cors());
 app.use('/auth', authRoutes);
-app.use('/api', weatherRoutes); //get api/weather?city=Berlin
+app.use('/api', weatherRoutes);
 
 try {
   const connection = getConnection();
